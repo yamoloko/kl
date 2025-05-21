@@ -1,49 +1,38 @@
-#include<iostream>
-#include<fstream>
-#include<cstring>
-#include<string>
+#include <iostream>
 using namespace std;
 
-struct names{
-    string name;
-    float price;
-}; 
-int main(){
-    names ch[1000000];
-    int count = 0 ;
-ifstream kl("temp.txt");
-string line;
-while(count < 100 && getline(kl , line)){
-    size_t find = line.rfind((','));
-        if(find != string::npos){ 
-         ch[count].name = line.substr(0,find);
-         ch[count].price = stof(line.substr(find+1));
-         count ++;
-
-    //when we dont use the struct
-    //  name[count] = line.substr(0, find);
-    //  prices[count] = stof(line.substr(find + 1));
- 
-        } }
-kl.close();
- 
-for(int i=0;  i<count; i++){
-    for(int j=0; j<count-i-i; j++){
-        if(ch[j].name > ch[j+1].name){
-            names temp =ch[j];
-            ch[j] = ch[j+1];
-            ch[j+1] = temp;
+// Function to find max and min using pointers
+void findMaxMin(int arr[], int size, int* max, int* min) {
+    // Initialize max and min with first element
+    *max = *min = arr[0];
+    
+    // Loop through the array using pointer arithmetic
+    for(int i = 1; i < size; i++) {
+        if(*(arr + i) > *max) {
+            *max = *(arr + i);  // Update max if current element is larger
+        }
+        if(*(arr + i) < *min) {
+            *min = *(arr + i);  // Update min if current element is smaller
         }
     }
 }
- 
 
-
-ofstream in("temp.txt"); 
-for(int i=0; i<count; i++){
-    in << ch[i].name << "," << ch[i].price << endl;
-    cout << ch[i].name << " - " << ch[i].price << endl;
-}
-
+int main() {
+    int numbers[] = {5, 2, 9, 1, 7, 4};
+    int size = sizeof(numbers) / sizeof(numbers[0]);
+    int max, min;
+    
+    // Call the function with addresses of max and min
+    findMaxMin(numbers, size, &max, &min);
+    
+    cout << "Array elements: ";
+    for(int i = 0; i < size; i++) {
+        cout << numbers[i] << " ";
+    }
+    cout << endl;
+    
+    cout << "Maximum value: " << max << endl;
+    cout << "Minimum value: " << min << endl;
+    
     return 0;
 }
